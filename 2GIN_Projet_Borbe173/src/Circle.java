@@ -16,8 +16,9 @@ public class Circle {
     private int y;
     private int width;
     private int height;
-    private int angle;
     private Color color;
+    private int radius = 30;
+    private int angle;
     
     public Circle(int pX, int pY){
         this.x = pX;
@@ -25,8 +26,18 @@ public class Circle {
     }
     
     public void draw(Graphics g){
-        //oben rechts
         g.setColor(color);
-        g.drawArc(x+width/2, y+height/2, width/2, height/2,0, 90);
+        g.drawArc(x-radius, y-radius, radius*2, radius*2,0+angle, 90);
+        g.drawArc(x-radius, y-radius, radius*2, radius*2,90+angle, 90);
+        g.drawArc(x-radius, y-radius, radius*2, radius*2,180+angle, 90);
+        g.drawArc(x-radius, y-radius, radius*2, radius*2,270+angle, 90);
+    }
+    
+    public void moveLeft(){
+        angle = angle + 30;
+    }
+    
+    public void moveRight(){
+        angle= angle -30;
     }
 }
