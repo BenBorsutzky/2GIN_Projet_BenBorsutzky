@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -12,19 +13,20 @@ import java.awt.Graphics;
  * @author Borsutzky
  */
 public class Ball {
-    private int x;
-    private int y;
-    private int xDir;
-    private int yDir;
-    private int radius;
-    private Color color;
+    private int x; // center of the ball x
+    private int y; // center of the ball y
+    private int xDir; // ball direction x
+    private int yDir; // ball direction y
+    private int radius = 15; // radius of the ball
+    ArrayList <Color> alColors = new ArrayList<>(); // List with 4 lists --> randomized
     
-    public Ball(int pX, int pY, int pRadius){
+    //Set x and y of the ball
+    public Ball(int pX, int pY){
         this.x = pX;
         this.y = pY;
-        this.radius = pRadius;
     }
     
+    //Check if the ball hits the wall of the Circle (width, height = inside of the circle)
     public void isHit(int width, int height){
         if((y+radius+yDir>=height)||(y-radius+yDir<=0)){
             yDir = -yDir;
@@ -35,14 +37,31 @@ public class Ball {
         }
     }
     
+    //moves the ball after the collision with the circle
     public void move(int width, int height){
         isHit(width, height);
         x = x+ xDir;
         y = y+ yDir;    
     }
     
+    //draw the ball, x and y = center of the ball
     public void draw(Graphics g){
-        g.setColor(color);
+        g.setColor(randomColor());
         g.fillOval(x-radius, y-radius, radius*2, radius*2);
     }
+    
+    //method to get a random color from the ArrayList
+    public Color randomColor(){
+        
+        alColors.add(Color.blue);
+        alColors.add(Color.green);
+        alColors.add(Color.pink);
+        alColors.add(Color.orange);
+        
+        int index = (int) (Math.random() * alColors.size());
+        
+        return alColors.get(index);     
+    }
+    
 }
+

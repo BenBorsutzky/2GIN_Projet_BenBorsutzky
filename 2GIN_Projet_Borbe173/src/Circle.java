@@ -12,12 +12,9 @@ import java.awt.Graphics;
  * @author Borsutzky
  */
 public class Circle {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Color color;
-    private int radius = 30;
+    private int x; // center of the circle x
+    private int y; // center of the circle y
+    private int radius = 50; // radius of the circle
     private int angle;
     
     public Circle(int pX, int pY){
@@ -25,11 +22,15 @@ public class Circle {
         this.y = pY;
     }
     
+    
     public void draw(Graphics g){
-        g.setColor(color);
+        g.setColor(Color.cyan);
         g.drawArc(x-radius, y-radius, radius*2, radius*2,0+angle, 90);
+        g.setColor(Color.green);
         g.drawArc(x-radius, y-radius, radius*2, radius*2,90+angle, 90);
+        g.setColor(Color.pink);
         g.drawArc(x-radius, y-radius, radius*2, radius*2,180+angle, 90);
+        g.setColor(Color.orange);
         g.drawArc(x-radius, y-radius, radius*2, radius*2,270+angle, 90);
     }
     
