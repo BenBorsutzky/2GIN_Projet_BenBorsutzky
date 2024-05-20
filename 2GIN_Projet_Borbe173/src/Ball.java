@@ -17,16 +17,16 @@ public class Ball {
     private int y; // center of the ball y
     private int xDir; // ball direction x
     private int yDir; // ball direction y
-    private int radius = 15; // radius of the ball
+    private int radius = 7; // radius of the ball
     ArrayList <Color> alColors = new ArrayList<>(); // List with 4 lists --> randomized
     
-    //Set x and y of the ball
+    //set x and y of the ball
     public Ball(int pX, int pY){
         this.x = pX;
         this.y = pY;
     }
     
-    //Check if the ball hits the wall of the Circle (width, height = inside of the circle)
+    //check if the ball hits the wall of the Circle (width, height = inside of the circle)
     public void isHit(int width, int height){
         if((y+radius+yDir>=height)||(y-radius+yDir<=0)){
             yDir = -yDir;
@@ -53,9 +53,9 @@ public class Ball {
     //method to get a random color from the ArrayList
     public Color randomColor(){
         
-        alColors.add(Color.blue);
+        alColors.add(Color.cyan);
         alColors.add(Color.green);
-        alColors.add(Color.pink);
+        alColors.add(Color.magenta);
         alColors.add(Color.orange);
         
         int index = (int) (Math.random() * alColors.size());

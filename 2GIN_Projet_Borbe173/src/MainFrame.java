@@ -8,12 +8,15 @@
  * @author Borsutzky
  */
 public class MainFrame extends javax.swing.JFrame {
+    private Game game;
     
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        game = new Game(new Ball(drawPanel1.getWidth()/2,drawPanel1.getHeight()/2),new Circle(drawPanel1.getWidth()/2, drawPanel1.getHeight()/2));
+        drawPanel1.setGame(game);
     }
 
     /**
@@ -29,6 +32,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        drawPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                drawPanel1MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout drawPanel1Layout = new javax.swing.GroupLayout(drawPanel1);
         drawPanel1.setLayout(drawPanel1Layout);
         drawPanel1Layout.setHorizontalGroup(
@@ -37,7 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         drawPanel1Layout.setVerticalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 294, Short.MAX_VALUE)
+            .addGap(0, 286, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -49,13 +58,23 @@ public class MainFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void drawPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanel1MousePressed
+        if(evt.getButton()==1){
+            game.moveRight();
+        }
+        else if(evt.getButton()==3){
+            game.moveLeft();
+        }
+        drawPanel1.repaint();
+    }//GEN-LAST:event_drawPanel1MousePressed
+    
     /**
      * @param args the command line arguments
      */

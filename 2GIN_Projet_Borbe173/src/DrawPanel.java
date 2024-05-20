@@ -1,6 +1,8 @@
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -9,10 +11,10 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Sabine
+ * @author Borsutzky
  */
 public class DrawPanel extends javax.swing.JPanel {
-    
+    private Game game;
     /**
      * Creates new form DrawPanel
      */
@@ -40,6 +42,23 @@ public class DrawPanel extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setStroke(new BasicStroke(8));
+
+        g.setColor(Color.white);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        if(game!=null){
+            game.draw(g, getWidth(), getHeight());
+        }
+    }
  
     
     

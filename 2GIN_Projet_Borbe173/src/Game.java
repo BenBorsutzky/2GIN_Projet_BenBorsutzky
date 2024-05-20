@@ -16,20 +16,33 @@ public class Game {
     private Ball ball;
     private Circle circle;
     private boolean isGameOver;
+    private int radius = 70;
     
     //set the Ball and Circle at the start of the game
     public Game(Ball pBall, Circle pCircle){
+        this.ball = pBall;
+        this.circle = pCircle;
         
     }
     
     //initalize the ball and circle if none exists
     private void start(int width, int height){
-        
+        if(this.ball ==null){
+            Ball ball = new Ball(width/2,height/2);
+        }
+        if(this.circle == null){
+            Circle circle = new Circle(width/2, height/2);
+        }
     }
     
-    //checks if the left or the right button is pushed /rotate left or right
-    public void move(int mouseLeft, int mouseRight){
-        
+    //moves the circle to the right
+    public void moveRight(){
+        circle.moveRight();
+    }
+    
+    //moves the circle to the left
+    public void moveLeft(){
+        circle.moveLeft();
     }
     
     //check if the game is finished // if no, the color of the ball change
