@@ -1,3 +1,6 @@
+
+import javax.swing.Timer;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -9,14 +12,14 @@
  */
 public class MainFrame extends javax.swing.JFrame {
     private Game game;
+    private Timer timer;
     
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        game = new Game(new Ball(drawPanel1.getWidth()/2,drawPanel1.getHeight()/2),new Circle(drawPanel1.getWidth()/2, drawPanel1.getHeight()/2));
-        drawPanel1.setGame(game);
+        timer = new Timer(100,evt->updateView());
     }
 
     /**
@@ -29,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         drawPanel1 = new DrawPanel();
+        startButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,15 +42,28 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        startButton.setText("Start Game");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout drawPanel1Layout = new javax.swing.GroupLayout(drawPanel1);
         drawPanel1.setLayout(drawPanel1Layout);
         drawPanel1Layout.setHorizontalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(drawPanel1Layout.createSequentialGroup()
+                .addGap(123, 123, 123)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(141, Short.MAX_VALUE))
         );
         drawPanel1Layout.setVerticalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 286, Short.MAX_VALUE)
+            .addGroup(drawPanel1Layout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -57,14 +74,17 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(drawPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void updateView(){
+        drawPanel1.repaint();
+        game.start(drawPanel1.getWidth()/2,drawPanel1.getHeight()/2);
+        
+    }
+            
     private void drawPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanel1MousePressed
         if(evt.getButton()==1){
             game.moveRight();
@@ -72,8 +92,15 @@ public class MainFrame extends javax.swing.JFrame {
         else if(evt.getButton()==3){
             game.moveLeft();
         }
-        drawPanel1.repaint();
     }//GEN-LAST:event_drawPanel1MousePressed
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        game = new Game(new Ball(drawPanel1.getWidth()/2,drawPanel1.getHeight()/2),new Circle(drawPanel1.getWidth()/2, drawPanel1.getHeight()/2));
+        drawPanel1.setGame(game);
+        timer.start();
+        startButton.setVisible(false);
+        
+    }//GEN-LAST:event_startButtonActionPerformed
     
     /**
      * @param args the command line arguments
@@ -112,5 +139,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private DrawPanel drawPanel1;
+    private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }

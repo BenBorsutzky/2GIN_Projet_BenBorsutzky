@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class Ball {
     private int x; // center of the ball x
     private int y; // center of the ball y
-    private int xDir; // ball direction x
-    private int yDir; // ball direction y
+    private double xDir; // ball direction x
+    private double yDir; // ball direction y
     private int radius = 7; // radius of the ball
     ArrayList <Color> alColors = new ArrayList<>(); // List with 4 lists --> randomized
     
@@ -24,29 +24,30 @@ public class Ball {
     public Ball(int pX, int pY){
         this.x = pX;
         this.y = pY;
+        this.xDir = 2;
+        this.yDir = 0;
     }
     
-    //check if the ball hits the wall of the Circle (width, height = inside of the circle)
-    public void isHit(int width, int height){
-        if((y+radius+yDir>=height)||(y-radius+yDir<=0)){
-            yDir = -yDir;
-        }
+    
+    //moves the ball
+    public void move(int circleX,int circleY,int circleRadius){
         
-        if((x+radius+xDir>=width)||(x-radius+xDir<=0)){
+        double distance = Math.sqrt(Math.pow(x-circleX, 2)+ Math.pow(y-circleY,2));        
+        if(distance>=circleRadius+radius){
             xDir = -xDir;
+            yDir = -yDir;
+            
         }
+        y = y+(int)yDir;
+        x = x +(int)xDir;
+        
+    
     }
     
-    //moves the ball after the collision with the circle
-    public void move(int width, int height){
-        isHit(width, height);
-        x = x+ xDir;
-        y = y+ yDir;    
-    }
-    
-    //draw the ball, x and y = center of the ball
+    //draw the ball, x and y = center of thef ball
     public void draw(Graphics g){
-        g.setColor(randomColor());
+        Color random = randomColor();
+        g.setColor(random);
         g.fillOval(x-radius, y-radius, radius*2, radius*2);
     }
     

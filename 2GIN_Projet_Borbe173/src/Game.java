@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /*
@@ -11,12 +12,11 @@ import java.awt.Graphics;
  * @author Borsutzky
  */
 public class Game {
-    private int gameWidth;
-    private int gameHeight;
+
     private Ball ball;
     private Circle circle;
     private boolean isGameOver;
-    private int radius = 70;
+    private int radius = 70; 
     
     //set the Ball and Circle at the start of the game
     public Game(Ball pBall, Circle pCircle){
@@ -26,13 +26,14 @@ public class Game {
     }
     
     //initalize the ball and circle if none exists
-    private void start(int width, int height){
+    public void start(int width, int height){
         if(this.ball ==null){
             Ball ball = new Ball(width/2,height/2);
         }
         if(this.circle == null){
             Circle circle = new Circle(width/2, height/2);
         }
+        ball.move(width/2,height/2,radius);
     }
     
     //moves the circle to the right
