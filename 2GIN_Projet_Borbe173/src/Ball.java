@@ -21,9 +21,10 @@ public class Ball {
     ArrayList <Color> alColors = new ArrayList<>(); // List with 4 lists --> randomized
     
     //set x and y of the ball
-    public Ball(int pX, int pY){
+    public Ball(int pX, int pY, int pR){
         this.x = pX;
         this.y = pY;
+        this.radius = pR;
         this.xDir = 2;
         this.yDir = 0;
     }
@@ -33,7 +34,7 @@ public class Ball {
     public void move(int circleX,int circleY,int circleRadius){
         
         double distance = Math.sqrt(Math.pow(x-circleX, 2)+ Math.pow(y-circleY,2));        
-        if(distance>=circleRadius+radius){
+        if(distance>=circleRadius-radius){
             xDir = -xDir;
             yDir = -yDir;
             

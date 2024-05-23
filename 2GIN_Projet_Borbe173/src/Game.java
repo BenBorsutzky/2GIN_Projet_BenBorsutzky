@@ -16,24 +16,25 @@ public class Game {
     private Ball ball;
     private Circle circle;
     private boolean isGameOver;
-    private int radius = 70; 
+    private int ballRadius = 7;
+    private int circleRadius = 70;
     
     //set the Ball and Circle at the start of the game
-    public Game(Ball pBall, Circle pCircle){
-        this.ball = pBall;
-        this.circle = pCircle;
+    public Game(int width, int height){
+        this.ball = new Ball(width/2, height/2, ballRadius);
+        this.circle = new Circle(width/2, height/2, circleRadius);
         
     }
     
     //initalize the ball and circle if none exists
     public void start(int width, int height){
         if(this.ball ==null){
-            Ball ball = new Ball(width/2,height/2);
+            Ball ball = new Ball(width/2,height/2,ballRadius);
         }
         if(this.circle == null){
-            Circle circle = new Circle(width/2, height/2);
+            Circle circle = new Circle(width/2, height/2, circleRadius);
         }
-        ball.move(width/2,height/2,radius);
+        ball.move(width/2,height/2,circleRadius);
     }
     
     //moves the circle to the right

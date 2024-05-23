@@ -18,9 +18,10 @@ public class Circle {
     private int angle; // angle of the circle to move left or right
     
     //set x and y of the circle
-    public Circle(int pX, int pY){
+    public Circle(int pX, int pY,int pR){
         this.x = pX;
         this.y = pY;
+        this.radius = pR;
     }
     
     

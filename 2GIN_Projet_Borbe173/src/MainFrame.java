@@ -81,7 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void updateView(){
         drawPanel1.repaint();
-        game.start(drawPanel1.getWidth()/2,drawPanel1.getHeight()/2);
+        game.start(drawPanel1.getWidth(),drawPanel1.getHeight());
         
     }
             
@@ -95,7 +95,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_drawPanel1MousePressed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        game = new Game(new Ball(drawPanel1.getWidth()/2,drawPanel1.getHeight()/2),new Circle(drawPanel1.getWidth()/2, drawPanel1.getHeight()/2));
+        game = new Game(drawPanel1.getWidth(), drawPanel1.getHeight());
         drawPanel1.setGame(game);
         timer.start();
         startButton.setVisible(false);
