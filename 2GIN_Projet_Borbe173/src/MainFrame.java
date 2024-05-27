@@ -19,7 +19,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        timer = new Timer(100,evt->updateView());
+        timer = new Timer(1000/60,evt->updateView());
     }
 
     /**
@@ -42,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        startButton.setFont(new java.awt.Font("OCR A Extended", 3, 36)); // NOI18N
         startButton.setText("Start Game");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,15 +55,15 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel1Layout.setHorizontalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(drawPanel1Layout.createSequentialGroup()
-                .addGap(123, 123, 123)
-                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         drawPanel1Layout.setVerticalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(drawPanel1Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(153, Short.MAX_VALUE))
         );
 
@@ -74,7 +75,9 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -99,7 +102,6 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel1.setGame(game);
         timer.start();
         startButton.setVisible(false);
-        
     }//GEN-LAST:event_startButtonActionPerformed
     
     /**

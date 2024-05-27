@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -16,39 +17,57 @@ public class Circle {
     private int y; // center of the circle y
     private int radius = 70; // radius of the circle
     private int angle; // angle of the circle to move left or right
+    private ArrayList<Color> alColors = new ArrayList<>(); // list of the circle colors
     
-    //set x and y of the circle
+    //set x, y, radius of the circle and the add the 4 colors to the list
     public Circle(int pX, int pY,int pR){
         this.x = pX;
         this.y = pY;
         this.radius = pR;
+        alColors.add(Color.cyan);
+        alColors.add(Color.green);
+        alColors.add(Color.magenta);
+        alColors.add(Color.orange);
     }
     
     
-    //draw the 4 pieces of the circle (4 different colors)
+    //draw the 4 pieces of the circle from the list
     public void draw(Graphics g){
-        g.setColor(Color.cyan);
-        g.drawArc(x-radius, y-radius, radius*2, radius*2,0+angle, 90);
-        g.setColor(Color.green);
-        g.drawArc(x-radius, y-radius, radius*2, radius*2,90+angle, 90);
-        g.setColor(Color.magenta);
-        g.drawArc(x-radius, y-radius, radius*2, radius*2,180+angle, 90);
-        g.setColor(Color.orange);
-        g.drawArc(x-radius, y-radius, radius*2, radius*2,270+angle, 90);
+        for(int i = 0; i<alColors.size();i++){
+            g.setColor(alColors.get(i));
+            g.drawArc(x-radius, y-radius, radius*2, radius*2, angle+(i*90), 90);
+        }
+    }
+    
+    //Get the color of the quarter of the circle
+    public Color getQuarterColor(int quater){
+        return alColors.get(quater);
     }
     
     //rotate the circle to the left
     public void moveLeft(){
-        angle = angle + 40;
+        angle = (angle + 40) %360;
     }
     
     //rotate the circle to the right
     public void moveRight(){
-        angle= angle -40;
+        angle= (angle -40 + 360) %360;
     }
 
     public int getRadius() {
         return radius;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getAngle() {
+        return angle;
     }
     
     

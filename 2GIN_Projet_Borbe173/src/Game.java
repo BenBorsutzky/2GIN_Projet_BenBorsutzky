@@ -34,7 +34,7 @@ public class Game {
         if(this.circle == null){
             Circle circle = new Circle(width/2, height/2, circleRadius);
         }
-        ball.move(width/2,height/2,circleRadius);
+        ball.move(width/2,height/2,circleRadius, circle);
     }
     
     //moves the circle to the right
