@@ -20,6 +20,8 @@ public class Ball {
     private int radius = 7; // radius of the ball
     private boolean isHit= false;
     private Color ballColor; //current Color of the ball
+    private double friction;
+    private boolean isGameOver = false;
     ArrayList <Color> alColors = new ArrayList<>(); // List with 4 lists --> randomized
     
     //set x and y of the ball
@@ -29,6 +31,7 @@ public class Ball {
         this.radius = pR;
         this.xDir = 1;
         this.yDir = 1;
+        this.friction = (int)(Math.random()*(0.9-0.5)+0.5); 
         addColors();
         this.ballColor = randomColor();
     }
@@ -44,13 +47,15 @@ public class Ball {
             isHit=true;
             if(!isColorMatching(circle)){
                 System.out.println("Color is false");
+                isGameOver = true;
+                
             }
             
         }
+        
         y = y+(int)yDir;
         x = x +(int)xDir;
-        
-    
+       
     }
     
     
@@ -80,7 +85,7 @@ public class Ball {
     }
     
     //check if the color of the ball is the same than the circle color of the collision
-    private boolean isColorMatching(Circle circle){
+    public boolean isColorMatching(Circle circle){
         //calculate the angle between the ball and the center of the circle in degrees
         int collisionAngle = (int)Math.toDegrees(Math.atan2(y-circle.getY(),x-circle.getX())) + 360;
         
@@ -97,5 +102,16 @@ public class Ball {
         Color quarterColor = circle.getQuarterColor(quarter);
         return ballColor.equals(quarterColor);
     }
+
+    public boolean isIsHit() {
+        return isHit;
+    }
+
+    public boolean getIsGameOver() {
+        return isGameOver;
+    }
+    
+    
+    
 }
 

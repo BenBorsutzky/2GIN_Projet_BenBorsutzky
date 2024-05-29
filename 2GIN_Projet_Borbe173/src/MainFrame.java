@@ -20,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         timer = new Timer(1000/60,evt->updateView());
+        
     }
 
     /**
@@ -86,6 +87,11 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel1.repaint();
         game.start(drawPanel1.getWidth(),drawPanel1.getHeight());
         
+        if(game.isGameOver()){
+            LooseFrame frame = new LooseFrame();
+            frame.setVisible(true);
+        }
+        
     }
             
     private void drawPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanel1MousePressed
@@ -102,6 +108,7 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel1.setGame(game);
         timer.start();
         startButton.setVisible(false);
+        
     }//GEN-LAST:event_startButtonActionPerformed
     
     /**

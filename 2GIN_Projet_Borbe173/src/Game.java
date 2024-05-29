@@ -15,7 +15,6 @@ public class Game {
 
     private Ball ball;
     private Circle circle;
-    private boolean isGameOver;
     private int ballRadius = 7;
     private int circleRadius = 70;
     
@@ -48,8 +47,12 @@ public class Game {
     }
     
     //check if the game is finished // if no, the color of the ball change
-    public void isGameOver(){
+    public boolean isGameOver(){
         
+        if(ball.getIsGameOver()){
+            return true;
+        }
+        return false;
     }
     
     //draw the circle and the ball
