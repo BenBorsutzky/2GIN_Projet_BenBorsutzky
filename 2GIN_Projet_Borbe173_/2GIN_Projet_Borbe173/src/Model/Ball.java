@@ -1,8 +1,12 @@
+package Model;
+
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+        
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -20,8 +24,8 @@ public class Ball {
     private int radius = 7; // radius of the ball
     private boolean isHit= false;
     private Color ballColor; //current Color of the ball
-    private double friction;
-    private boolean isGameOver = false;
+    private boolean isGameOver = false; //shows if the game is over
+    private int score; //the score of the current game
     ArrayList <Color> alColors = new ArrayList<>(); // List with 4 lists --> randomized
     
     //set x and y of the ball
@@ -31,33 +35,41 @@ public class Ball {
         this.radius = pR;
         this.xDir = 1;
         this.yDir = 1;
-        this.friction = (int)(Math.random()*(0.9-0.5)+0.5); 
         addColors();
         this.ballColor = randomColor();
     }
     
-    
-    //moves the ball
+    //moves the ball and gives the ball a random speed between 0 and 1
     public void move(int circleX,int circleY,int circleRadius, Circle circle){
         
         double distance = Math.sqrt(Math.pow(x-circleX, 2)+ Math.pow(y-circleY,2));        
         if(distance>=circleRadius-radius){
+            score++;
+            double random = Utils.random(0,1);
+            if(xDir>0){
+                xDir = xDir+random;
+            }
+            if(xDir<0){
+                xDir = xDir-random;
+            }
+            if(yDir>0){
+                yDir = yDir+random;
+            }
+            if(yDir<0){
+                yDir = yDir-random;
+            }
             xDir = -xDir;
             yDir = -yDir;
             isHit=true;
-            if(!isColorMatching(circle)){
-                System.out.println("Color is false");
-                isGameOver = true;
-                
-            }
             
+            if(!isColorMatching(circle)){
+                isGameOver = true;     
+            }
         }
-        
         y = y+(int)yDir;
         x = x +(int)xDir;
        
     }
-    
     
     //draw the ball, x and y = center of thef ball
     public void draw(Graphics g){
@@ -96,7 +108,7 @@ public class Ball {
         int quarterAngle = (collisionAngle - circle.getAngle() + 360) %360;
         
         //Determines the quarter of the circle that the quarterangle hits (+3 = correction the the angle???)
-        int quarter = (quarterAngle / 90 + 3) %4;
+        int quarter = (quarterAngle / 90 +3) %4;
         
         //check if the ballcolor is the same than the quartercolor
         Color quarterColor = circle.getQuarterColor(quarter);
@@ -110,6 +122,15 @@ public class Ball {
     public boolean getIsGameOver() {
         return isGameOver;
     }
+
+    public int getScore() {
+        return score;
+    }
+   
+    public String toString() {
+        return "Score: " + (score-1);
+    }
+    
     
     
     

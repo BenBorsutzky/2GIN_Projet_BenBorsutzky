@@ -1,4 +1,10 @@
+package View;
 
+
+import Model.Game;
+import Model.Utils;
+import View.BlackBackground;
+import View.Background;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -14,12 +20,22 @@ import java.awt.Graphics2D;
  * @author Borsutzky
  */
 public class DrawPanel extends javax.swing.JPanel {
-    private Game game;
+    private Game game; // new game
+    private Background background; //new background
+    
     /**
      * Creates new form DrawPanel
      */
     public DrawPanel() {
         initComponents();
+        //randomize the backgroundcolor (black or gray)
+        if(Utils.random(1, 2)==1){
+            background = new BlackBackground();
+        }
+        else{
+            background = new GrayBackground();
+        }
+        
     }
 
     /**
@@ -42,19 +58,18 @@ public class DrawPanel extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+     //set the game
     public void setGame(Game game) {
         this.game = game;
     }
-
+    
+    //draw the if the a game exists, change the stroke of g
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         Graphics2D g2d = (Graphics2D) g;
         g2d.setStroke(new BasicStroke(8));
-
-        g.setColor(Color.white);
-        g.fillRect(0, 0, getWidth(), getHeight());
+        background.draw(g, getWidth(), getHeight());
         if(game!=null){
             game.draw(g, getWidth(), getHeight());
         }

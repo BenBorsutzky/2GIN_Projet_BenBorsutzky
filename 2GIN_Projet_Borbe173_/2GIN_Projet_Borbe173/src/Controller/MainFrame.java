@@ -1,4 +1,10 @@
+package Controller;
 
+
+import Model.Ball;
+import Model.Game;
+import View.DrawPanel;
+import java.util.ArrayList;
 import javax.swing.Timer;
 
 /*
@@ -11,8 +17,11 @@ import javax.swing.Timer;
  * @author Borsutzky
  */
 public class MainFrame extends javax.swing.JFrame {
-    private Game game;
-    private Timer timer;
+    private Game game; // new game
+    private Timer timer; // new timer
+    private long startingTime;  //current time from the start of the game
+    private long stopTime; //current time from the end of the game
+    private ArrayList<Ball> alScores = new ArrayList<>();
     
     /**
      * Creates new form MainFrame
@@ -32,8 +41,10 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        drawPanel1 = new DrawPanel();
+        drawPanel1 = new View.DrawPanel();
         startButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,7 +54,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        startButton.setFont(new java.awt.Font("OCR A Extended", 3, 36)); // NOI18N
+        startButton.setFont(new java.awt.Font("Tw Cen MT", 1, 36)); // NOI18N
         startButton.setText("Start Game");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,44 +67,71 @@ public class MainFrame extends javax.swing.JFrame {
         drawPanel1Layout.setHorizontalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(drawPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGap(97, 97, 97)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         drawPanel1Layout.setVerticalGroup(
             drawPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(drawPanel1Layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addGap(118, 118, 118)
+                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(145, Short.MAX_VALUE))
         );
+
+        jScrollPane1.setViewportView(jList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(drawPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    //update the Drawpanel and looks if the game is over
     private void updateView(){
         drawPanel1.repaint();
         game.start(drawPanel1.getWidth(),drawPanel1.getHeight());
-        
         if(game.isGameOver()){
-            LooseFrame frame = new LooseFrame();
+            alScores.add(game.getBall());
+            sortList();
+            jList.setListData(toArray());
+            stopTime = System.nanoTime();
+            LooseFrame frame = new LooseFrame(this);
             frame.setVisible(true);
+            timer.stop();
         }
         
+        
     }
-            
+    
+    public Object[] toArray() {
+        return alScores.toArray();
+    }
+    
+    
+    //restarts the game
+    public void restart(){
+        game = new Game(drawPanel1.getWidth(), drawPanel1.getHeight());
+        drawPanel1.setGame(game);
+        timer.start();
+        startingTime = System.nanoTime();
+        startButton.setVisible(false);
+        
+    }    
+    
+    //method to play with the left and right mouse button
     private void drawPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanel1MousePressed
         if(evt.getButton()==1){
             game.moveRight();
@@ -102,14 +140,36 @@ public class MainFrame extends javax.swing.JFrame {
             game.moveLeft();
         }
     }//GEN-LAST:event_drawPanel1MousePressed
-
+    
+    //starts the game after pressing the startbutton
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        game = new Game(drawPanel1.getWidth(), drawPanel1.getHeight());
-        drawPanel1.setGame(game);
-        timer.start();
-        startButton.setVisible(false);
-        
+        restart();
     }//GEN-LAST:event_startButtonActionPerformed
+    
+    //sort the list with the the score from the highest to the lowest score
+    private void sortList(){
+        for(int i = 0; i < alScores.size(); i++) {
+	    int minIndex = i;
+	    for(int j = i; j < alScores.size(); j++) {
+		if(alScores.get(j).getScore()> alScores.get(minIndex).getScore()) {
+		    minIndex = j;
+		}
+            }
+	    Ball swap = alScores.get(minIndex);
+	    alScores.set(minIndex, alScores.get(i));
+	    alScores.set(i, swap);
+    }
+    }
+    
+    //gets the gameTime in Seconds
+    public double getTimeInSeconds(){
+        return (getTimeInMilliSeconds())/1000.0;
+    }
+    
+    //gets the gameTime in Milliseconds
+    public long getTimeInMilliSeconds(){
+        return (stopTime-startingTime)/1000000;
+    }
     
     /**
      * @param args the command line arguments
@@ -147,7 +207,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private DrawPanel drawPanel1;
+    private View.DrawPanel drawPanel1;
+    private javax.swing.JList jList;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }
